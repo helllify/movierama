@@ -1,8 +1,8 @@
 import React, { useState, useCallback, useEffect } from "react";
-import CssBaseline from "@material-ui/core/CssBaseline";
+import CssBaseline from '@mui/material/CssBaseline';
 import "./App.css";
 import Jumbotron from "./components/Jumbotron";
-import Grid from "@material-ui/core/Grid";
+import { Grid } from '@mui/material';
 import Page from "./components/Page";
 import UserInput from "./components/UserInput";
 import Movies from "./components/Movies";

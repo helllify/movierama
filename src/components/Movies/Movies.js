@@ -1,6 +1,6 @@
 import React from "react";
 import Movie from "./Movie";
-import Grid from "@material-ui/core/Grid";
+import { Grid } from '@mui/material';
 import PropTypes from "prop-types";
 
 const Movies = ({ moviesArray }) => {
@@ -22,7 +22,7 @@ const Movies = ({ moviesArray }) => {
     <Grid
       container
       direction="row"
-      justify="center"
+      justifyContent="center"
       alignItems="center"
       spacing={3}
     >

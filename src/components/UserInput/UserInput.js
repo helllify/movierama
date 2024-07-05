@@ -1,32 +1,35 @@
 import React, { useEffect, memo } from "react";
-import TextField from "@material-ui/core/TextField";
+import { css } from "@emotion/react";
 import useInput from "../../hooks/useInput";
 import useDebounce from "../../hooks/useDebounce";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
+import styled from '@emotion/styled';
+import { TextField, Typography } from '@mui/material';
 
-const CssTextField = withStyles({
-  root: {
-    "& label.Mui-focused": {
-      color: "#dee2e6",
-    },
-    "& .MuiInput-underline:after": {
-      borderBottomColor: "#dee2e6",
-    },
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        borderColor: "#dee2e6",
-      },
-      "&:hover fieldset": {
-        borderColor: "#dee2e6",
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: "#dee2e6",
-      },
-    },
-  },
-})(TextField);
+
+const customStyles = css`
+  & label.Mui-focused {
+    color: #dee2e6;
+  }
+  & .MuiInput-underline:after {
+    border-bottom-color: #dee2e6;
+  }
+  & .MuiOutlinedInput-root {
+    & fieldset {
+      border-color: #dee2e6;
+    }
+    &:hover fieldset {
+      border-color: #dee2e6;
+    }
+    &.Mui-focused fieldset {
+      border-color: #dee2e6;
+    }
+  }
+`;
+
+const CssTextField = styled(TextField)`
+  ${customStyles}
+`;
 
 const UserInput = ({ updateSearchTerm }) => {
   const { value, onChange } = useInput("");

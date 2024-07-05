@@ -1,19 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import clsx from "clsx";
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
-import Collapse from "@material-ui/core/Collapse";
-import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { css } from "@emotion/react";
+import { Grid, Typography, Divider, IconButton, Avatar, Collapse, CardActions, CardContent, CardHeader, Card } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Poster from "./Poster";
-import Grid from "@material-ui/core/Grid";
 import PropTypes from "prop-types";
-import { Divider } from "@material-ui/core";
 import GenresContext from "../../../Context/GenresContext";
 import { getGenreNameByID } from "./utils";
 import {
@@ -25,45 +15,51 @@ import Reviews from "./Reviews";
 import SimilarMovies from "./SimilarMovies";
 import Trailers from "./Trailers";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
+const rootStyle = css`
     maxWidth: "auto",
     backgroundColor: "#e9ecef",
-  },
-  media: {
+  }`;
+
+  const mediaStyle = css`
     height: 0,
     paddingTop: "56.25%", // 16:9
-  },
-  expand: {
+  }`;
+
+  const expandStyle = css`
     transform: "rotate(0deg)",
     marginLeft: "auto",
     transition: theme.transitions.create("transform", {
       duration: theme.transitions.duration.shortest,
     }),
-  },
-  expandOpen: {
+  }`;
+
+  const expandOpenStyle = css`
     transform: "rotate(180deg)",
-  },
-  avatar: {
+  }`;
+
+  const avatarStyle = css`
     backgroundColor: "#adb5bd",
-  },
-  rating: {
+  }`;
+
+  const ratingStyle = css`
     color: "#fff",
-  },
-  genreList: {
+  }`;
+
+  const genreListStyle = css`
     fontStyle: "italic",
-  },
-  title: {
+  }`;
+
+  const titleStyle = css`
     // color: "#fff",
-  },
-  review: {
+  }`;
+
+  const reviewStyle = css`
     fontSize: "1rem",
     fontFamily: "Roboto, Helvetica, Arial, sans-serif",
     fontWeight: "400",
     lineHeight: "1.5",
     letterSpacing: "0.00938em",
-  },
-}));
+  }`;
 
 const Movie = ({
   id,
@@ -74,7 +70,6 @@ const Movie = ({
   vote_average,
   overview,
 }) => {
-  const classes = useStyles();
   const genreList = useContext(GenresContext);
   const movieGenres = genre_ids.map((id) => getGenreNameByID(genreList, id));
   const [userReviews, setUsersReviews] = useState([]);
@@ -95,17 +90,17 @@ const Movie = ({
   }, [expanded, id]);
 
   const movieTitle = (
-    <Typography variant="h4" className={classes.title}>
+    <Typography variant="h4" css={titleStyle}>
       {title}
     </Typography>
   );
 
   return (
-    <Card className={classes.root}>
+    <Card css={rootStyle}>
       <CardHeader
         avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            <Typography className={classes.rating}>{vote_average}</Typography>
+          <Avatar aria-label="recipe" css={avatarStyle}>
+            <Typography css={ratingStyle}>{vote_average}</Typography>
           </Avatar>
         }
         title={movieTitle}
@@ -121,7 +116,7 @@ const Movie = ({
               variant="body2"
               color="textSecondary"
               component="p"
-              className={classes.genreList}
+              css={genreListStyle}
             >
               {movieGenres.map((movieGenre, index) => (
                 <span key={index}>{movieGenre} </span>
@@ -132,9 +127,10 @@ const Movie = ({
       </CardContent>
       <CardActions disableSpacing>
         <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
+          css={css`
+          ${expandStyle};
+          ${expanded && expandOpenStyle};
+        `}
           onClick={handleExpandClick}
           aria-expanded={expanded}
           aria-label="show more"
@@ -153,7 +149,7 @@ const Movie = ({
           {movieTrailers.length && <Trailers movieTrailers={movieTrailers} />}
         </CardContent>
         <CardContent>
-          <Typography variant="h6" className={classes.review}>
+          <Typography variant="h6" css={reviewStyle}>
             <Reviews reviews={userReviews} />
           </Typography>
         </CardContent>

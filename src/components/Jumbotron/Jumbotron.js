@@ -1,22 +1,36 @@
 import React from "react";
-import useStyles from "./styles";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
+import { css } from "@emotion/react";
+import { Typography, Grid } from '@mui/material';
+
+const rootStyle = css`
+  height: 20vh;
+  padding: 0;
+  background-color: #dee2e6;
+`;
+
+const titleStyle = css`
+  color: #212529;
+  font-size: 68px !important;
+`;
+
+const subTitleStyle = css`
+  color: 212529;
+  font-size: 22px !important;
+`;
 
 const Jumbotron = () => {
-  const classes = useStyles();
-  const title = <Typography className={classes.title}>MovieRama</Typography>;
+  const title = <Typography css={titleStyle}>MovieRama</Typography>;
   const subTitle = (
-    <Typography className={classes.subTitle}>Search for movies!</Typography>
+    <Typography css={subTitleStyle}>Search for movies!</Typography>
   );
 
   return (
     <Grid
       container
       direction="column"
-      justify="center"
+      justifyContent="center"
       alignItems="center"
-      className={classes.root}
+      css={rootStyle}
     >
       <Grid item>{title}</Grid>
       <Grid item>{subTitle}</Grid>

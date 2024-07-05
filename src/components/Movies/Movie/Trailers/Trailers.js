@@ -1,8 +1,6 @@
 import React from "react";
 import Trailer from "./Trailer";
-import { Divider } from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
+import { Grid, Typography, Divider } from '@mui/material';
 
 const Trailers = ({ movieTrailers }) => {
   return (
@@ -13,7 +11,7 @@ const Trailers = ({ movieTrailers }) => {
       <Grid
         container
         direction="row"
-        justify="center"
+        justifyContent="center"
         alignItems="center"
         spacing={2}
       >

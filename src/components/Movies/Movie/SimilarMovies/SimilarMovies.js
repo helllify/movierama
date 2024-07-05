@@ -1,10 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Divider } from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
 import { sortyByPopularity } from "../utils";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
+import { Typography, Divider, ListItem, List } from '@mui/material';
 
 const SimilarMovies = ({ movies }) => {
   const similarMoviesExist = movies.length !== 0;

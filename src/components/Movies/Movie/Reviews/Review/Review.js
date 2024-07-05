@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Typography from "@material-ui/core/Typography";
-import { Divider } from "@material-ui/core";
+import { Divider, Typography } from '@mui/material';
 
 const Review = ({ author, content, id, url }) => {
   return (

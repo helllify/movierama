@@ -1,8 +1,7 @@
 import React from "react";
 import Review from "./Review";
 import PropTypes from "prop-types";
-import Typography from "@material-ui/core/Typography";
-
+import { Typography } from '@mui/material';
 const Reviews = ({ reviews }) => {
   const reviewsCopy = [...reviews];
   const firstTwoReviews = reviewsCopy.slice(0, 2);
