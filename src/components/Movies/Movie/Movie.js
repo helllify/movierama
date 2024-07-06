@@ -4,7 +4,7 @@ import { Grid, Typography, Divider, IconButton, Avatar, Collapse, CardActions, C
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Poster from "./Poster";
 import PropTypes from "prop-types";
-import GenresContext from "../../../Context/GenresContext";
+import { useSelector } from 'react-redux';
 import { getGenreNameByID } from "./utils";
 import {
   fetchMovieReviews,
@@ -70,7 +70,7 @@ const Movie = ({
   vote_average,
   overview,
 }) => {
-  const genreList = useContext(GenresContext);
+  const genreList = useSelector((state) => state.movies.genres);
   const movieGenres = genre_ids.map((id) => getGenreNameByID(genreList, id));
   const [userReviews, setUsersReviews] = useState([]);
   const [similarMovies, setSimilarMovies] = useState([]);

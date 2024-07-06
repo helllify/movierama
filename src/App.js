@@ -2,17 +2,13 @@ import React, { useState, useCallback, useEffect } from "react";
 import CssBaseline from '@mui/material/CssBaseline';
 import "./App.css";
 import Jumbotron from "./components/Jumbotron";
+import { useSelector, useDispatch } from 'react-redux';
 import { Grid } from '@mui/material';
 import Page from "./components/Page";
 import UserInput from "./components/UserInput";
 import Movies from "./components/Movies";
-import {
-  fetchCurrentlyPlayingMovies,
-  searchMovie,
-  fetchGenreList,
-} from "./network/fetchFunctions";
 import Footer from "./components/Footer";
-import { GenresProvider } from "./Context/GenresContext";
+import { fetchCurrentlyPlayingMovies, searchMovie, getGenres } from './store/movie-actions';
 
 const observerOptions = {
   rootMargin: "0px",
@@ -20,22 +16,15 @@ const observerOptions = {
 };
 
 const App = () => {
-  const [genres, setGenres] = useState([]);
+  const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
   const [moviesPlayingNowSearchPage, setMoviesPlayingNowSearchPage] = useState(
     1
   );
-  const [moviesPlayingNow, setMoviesPlayingNow] = useState([]);
-
+  // const genres = useSelector((state) => state.movies.genres);
+  const moviesPlayingNow = useSelector((state) => state.movies.movies);
+  const searchResults = useSelector((state) => state.movies.searchMovies);
   const observerTarget = document.getElementById("end-of-page");
-
-  /**
-   * fetch genres
-   */
-  useEffect(() => {
-    fetchGenreList().then((genreList) => setGenres(genreList));
-  }, []);
 
   /**
    * intersection observer
@@ -59,32 +48,29 @@ const App = () => {
     return () => (observerTarget ? observer.unobserve() : null);
   }, [observerTarget]);
 
+
+  useEffect(() => {
+    dispatch(getGenres());
+    dispatch(fetchCurrentlyPlayingMovies(moviesPlayingNowSearchPage));
+  }, [dispatch, moviesPlayingNowSearchPage]);
+
+
   const updateSearchTermCallback = useCallback(
     (newSearchTerm) => setSearchTerm(newSearchTerm),
     [setSearchTerm]
   );
-
-  useEffect(() => {
-    fetchCurrentlyPlayingMovies(moviesPlayingNowSearchPage).then((movies) =>
-      setMoviesPlayingNow((prevMovies) => prevMovies.concat(movies))
-    );
-  }, [moviesPlayingNowSearchPage]);
 
   /**
    * fetch on search term change
    */
   useEffect(() => {
     if (searchTerm) {
-      searchMovie(searchTerm).then((queryResult) =>
-        setSearchResults(queryResult)
-      );
-    } else {
-      setSearchResults([]);
+      dispatch(searchMovie(searchTerm));
     }
-  }, [searchTerm]);
+  }, [dispatch, searchTerm]);
 
   const moviesToDisplay =
-    searchResults.length !== 0 ? (
+    searchTerm && searchResults.length !== 0 ? (
       <Movies moviesArray={searchResults} />
     ) : (
       <Movies moviesArray={moviesPlayingNow} />
@@ -106,7 +92,7 @@ const App = () => {
             <UserInput updateSearchTerm={updateSearchTermCallback} />
           </Grid>
           <Grid item>
-            <GenresProvider value={genres}>{moviesToDisplay}</GenresProvider>
+            {moviesToDisplay}
           </Grid>
         </Grid>
         <Footer />
